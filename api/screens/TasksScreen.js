@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
+import {connect} from 'react-redux';
 import Screen from '../components/Screen';
 import Card from '../components/Card';
 
 
-const tasks = [
+const test = [
     {
         id: 1,
         title: 'Test123',
@@ -67,7 +68,8 @@ const tasks = [
     },
 ]
 
-function TasksScreen() {
+function TasksScreen({tasks}) {
+   
   return (
     <Screen>
         <View style={styles.container}>
@@ -81,7 +83,6 @@ function TasksScreen() {
                         description={item.description}  
                     />
                 }
-
             >
             </FlatList>
         </View>
@@ -99,4 +100,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TasksScreen;
+const mapStateToProps = (state) => {
+    return {
+        tasks: state.tasksReducer.tasks,
+    }
+};
+
+export default connect(mapStateToProps)(TasksScreen);

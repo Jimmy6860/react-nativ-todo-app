@@ -11,7 +11,7 @@ function Card({title, description, priority}) {
         </View>
 
   return (
-      
+
     <Swipeable renderRightActions={renderRightActions}>
         <View style={styles.container}>
             <View style={styles.priority}/>
@@ -30,7 +30,7 @@ function Card({title, description, priority}) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.light,
     borderTopColor: 'red',
     borderRadius: 5,
     height: 80,
