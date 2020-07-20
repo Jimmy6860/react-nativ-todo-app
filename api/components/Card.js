@@ -3,7 +3,7 @@ import { View, StyleSheet, Text } from 'react-native';
 import colors from '../config/colors';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
-function Card({title, description, priority}) {
+function Card({title, description, priority, time}) {
 
     const renderRightActions = () => 
         <View style={styles.swipeRight}>
@@ -14,45 +14,63 @@ function Card({title, description, priority}) {
 
     <Swipeable renderRightActions={renderRightActions}>
         <View style={styles.container}>
-            <View style={styles.priority}/>
             <View style={styles.details}>
+              <View style={[styles.priority, {backgroundColor: colors[priority]}]}>
+                <Text style={styles.text}>{priority}</Text>
+              </View>
+              <Text>{time}</Text>
+            </View>
+            <View style={styles.info}>
                 <Text style={styles.title}>
-                    {title}
+                  {title}
                 </Text>
                 <Text style={styles.description}>
-                {description}
+                  {description}
                 </Text>
             </View>
         </View>
+        <View style={styles.seperator}/>
     </Swipeable>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.light,
     borderTopColor: 'red',
     borderRadius: 5,
     height: 80,
-    margin: 10,
-    width: '95%',
+    paddingHorizontal: 16,
+    width: '100%',
   },
   description: {
-    color: colors.medium
+    color: colors.grey
   },
   details: {
+    alignSelf: 'flex-end',
+    flexDirection: 'row',
+    marginTop: 6
+  },
+  info: {
     flex: 1,
-    padding: 10
   },
   priority: {
-      backgroundColor: 'red',
-      height: 5,
-      width: '100%'
+    alignItems: 'center',
+    backgroundColor: 'red',
+    borderRadius: 20,
+    marginRight: 8,
+    width: 70
+  },
+  seperator: {
+    backgroundColor: colors.light,
+    height: 2,
+    width: '100%'
   },
   swipeRight: {
     backgroundColor: colors.done,
-    height: 50,
     width: 50,
+  },
+  text: {
+    color: colors.white
   },
   title: {
       fontSize: 20,

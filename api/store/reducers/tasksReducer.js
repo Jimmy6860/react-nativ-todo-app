@@ -1,7 +1,6 @@
 import {ADD_TASK} from '../actionTypes';
 
-const initialState = {
-    tasks: [
+const initialState = [
         {
             id: 1,
             title: 'Test123',
@@ -14,19 +13,19 @@ const initialState = {
             description: 'This is my dummy text.',
             priority: 'medium'
         },
-    ]
-};
+];
 
-const tasksReducer= (state = initialState, action) => {
+const tasksReducer = (state = initialState, action) => {
+    console.log('reducer', action.payload)
     switch (action.type) {
         case ADD_TASK:
-            return {
+            return [
                 ...state, 
-                tasks: action.payload
-            }
+                action.payload
+            ]
         default:
             return state;
     }
 };
 
-export default tasksReducer
+export default tasksReducer;
