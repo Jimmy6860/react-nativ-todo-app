@@ -7,6 +7,7 @@ export default {
     dark: '#0c0c0c',
     error: '#ff1744',
     done: '#388e3c',
+    delete: '#d32f2f',
     high: '#c62828',
     medium: '#ef6c00',
     low: '#0277bd'

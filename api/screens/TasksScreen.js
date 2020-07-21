@@ -15,10 +15,12 @@ function TasksScreen({tasks}) {
                 style={styles.flatList}
                 renderItem={({item}) => 
                     <Card
+                        key={item.id}
                         title={item.title}
                         description={item.description} 
                         time={item.time} 
                         priority={item.priority}
+                        id={item.id}
                     />
                 }
             >

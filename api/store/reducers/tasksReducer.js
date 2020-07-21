@@ -1,4 +1,4 @@
-import {ADD_TASK} from '../actionTypes';
+import {ADD_TASK, DELETE_TASK} from '../actionTypes';
 
 const initialState = [
         {
@@ -16,13 +16,20 @@ const initialState = [
 ];
 
 const tasksReducer = (state = initialState, action) => {
-    console.log('reducer', action.payload)
     switch (action.type) {
-        case ADD_TASK:
+        case ADD_TASK: {
             return [
                 ...state, 
                 action.payload
             ]
+        }
+        case DELETE_TASK: {
+            const filtered = state.filter(i => i.id !== action.payload)
+            console.log('delete action', filtered)
+            return [
+                ...filtered, 
+            ]
+        }
         default:
             return state;
     }

@@ -1,18 +1,37 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import colors from '../config/colors';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {deleteTask} from '../store/actions/taskActions';
+import {connect} from "react-redux";
 
-function Card({title, description, priority, time}) {
+function Card({title, description, priority, time, id, deleteTask}) {
+
+  const onPressDelete = () => {
+    deleteTask(id)
+  }
 
     const renderRightActions = () => 
-        <View style={styles.swipeRight}>
+      <TouchableOpacity style={styles.swipeRight}>
+        <MaterialCommunityIcons
+          name="check"
+          color={colors.white}
+          size={24}
+        />
+      </TouchableOpacity>
 
-        </View>
+    const renderLeftActions = () =>
+      <TouchableOpacity onPress={onPressDelete} style={styles.swipeLeft}>
+        <MaterialCommunityIcons
+          name="delete-empty"
+          color={colors.white}
+          size={24}
+        />
+      </TouchableOpacity>
 
   return (
-
-    <Swipeable renderRightActions={renderRightActions}>
+    <Swipeable renderRightActions={renderRightActions} renderLeftActions={renderLeftActions}>
         <View style={styles.container}>
             <View style={styles.details}>
               <View style={[styles.priority, {backgroundColor: colors[priority]}]}>
@@ -36,8 +55,8 @@ function Card({title, description, priority, time}) {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: colors.white,
     borderTopColor: 'red',
-    borderRadius: 5,
     height: 80,
     paddingHorizontal: 16,
     width: '100%',
@@ -65,9 +84,17 @@ const styles = StyleSheet.create({
     height: 2,
     width: '100%'
   },
+  swipeLeft: {
+    backgroundColor: colors.delete,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 60,
+  },
   swipeRight: {
     backgroundColor: colors.done,
-    width: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 60,
   },
   text: {
     color: colors.white
@@ -79,4 +106,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Card;
+const mapStateToProps = (state) => {
+  return {
+    allTasks: state.tasksReducer
+  }
+};
+
+export default connect(mapStateToProps, {deleteTask})(Card);

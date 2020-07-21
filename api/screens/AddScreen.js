@@ -1,32 +1,36 @@
 import React from 'react';
-import { View, StyleSheet, TextInput, Button } from 'react-native';
+import { View, StyleSheet} from 'react-native';
 import Screen from '../components/Screen';
 import {Formik} from 'formik';
 import AppTextInput from '../components/AppTextInput';
-import {addTask} from '../store/actions/taskAction';
+import {addTask} from '../store/actions/taskActions';
 import {connect} from "react-redux";
 import colors from '../config/colors';
 import AppButton from '../components/AppButton';
 import moment from 'moment';
+import AppPicker from '../components/AppPicker';
 
 function AddScreen({addTask}) {
 
-  const handleSubmit = (task) => {
+  const handleSubmit = (task, {resetForm}) => {
     addTask(task)
     console.log(task)
+    resetForm()
   };
 
+  
+  
   return (
     <Screen style={styles.container}>
         <Formik
             initialValues={{
-                id: 9,
+                id: Math.random() * 100000,
                 title: '',
                 description: '',
                 priority: 'low',
                 time: moment().format('LL')
             }}
-            onSubmit={(values) => handleSubmit(values)}
+            onSubmit={(values, resetForm) => handleSubmit(values, resetForm)}
         >
         {({
             values,
@@ -39,12 +43,14 @@ function AddScreen({addTask}) {
             resetForm
           }) => (
               <View>
-                <AppTextInput
-                    name='title'
-                    placeholder='Title'
-                    value={values.title}
-                    onChangeText={handleChange('title')}
-                />
+                  <AppPicker/>
+                  <AppTextInput
+                      name='title'
+                      placeholder='Title'
+                      value={values.title}
+                      onChangeText={handleChange('title')}
+                      style={{marginTop: 10}}
+                  />
                 <AppTextInput
                     name='description'
                     placeholder='Description'
@@ -74,6 +80,9 @@ const styles = StyleSheet.create({
   },
   container: {
       padding: 10
+  },
+  info: {
+    flexDirection: 'row'
   },
   textInput: {
       backgroundColor: 'black',
