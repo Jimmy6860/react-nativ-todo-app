@@ -1,18 +1,46 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
+import Card from '../components/Card';
+import Screen from '../components/Screen';
+import {connect} from 'react-redux';
 
-function DoneScreen(props) {
+function DoneScreen({tasks}) {
   return (
-    <View style={styles.container}>
-        <Text>
-            Done
-        </Text>
-    </View>
+    <Screen>
+        <View style={styles.container}>
+          <FlatList
+              data={tasks}
+              keyExtractor={tasks => tasks.id}
+              style={styles.flatList}
+              renderItem={({item}) => 
+                  <Card
+                      key={item.id}
+                      title={item.title}
+                      description={item.description} 
+                      time={item.time} 
+                      priority={item.priority}
+                      id={item.id}
+                  />
+                }           
+          />
+        </View>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {}
+  container: {
+    flex: 1,
+  },
+  flatList: {
+    width: '100%'
+  },
 });
 
-export default DoneScreen;
+const mapStateToProps = (state) => {
+  return {
+    tasks: state.tasksDoneReducer
+  }
+}
+
+export default connect(mapStateToProps)(DoneScreen);

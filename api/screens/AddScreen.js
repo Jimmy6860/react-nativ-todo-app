@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet} from 'react-native';
+import { View, StyleSheet, Keyboard} from 'react-native';
 import Screen from '../components/Screen';
 import {Formik} from 'formik';
 import AppTextInput from '../components/AppTextInput';
@@ -9,6 +9,13 @@ import colors from '../config/colors';
 import AppButton from '../components/AppButton';
 import moment from 'moment';
 import AppPicker from '../components/AppPicker';
+import DropDownPicker from 'react-native-dropdown-picker';
+
+const priorities = [
+  {label: 'High', value: 'high'},
+  {label: 'Medium', value: 'medium'},
+  {label: 'Low', value: 'low'},
+];
 
 function AddScreen({addTask}) {
 
@@ -16,18 +23,17 @@ function AddScreen({addTask}) {
     addTask(task)
     console.log(task)
     resetForm()
+    Keyboard.dismiss
   };
 
-  
-  
   return (
     <Screen style={styles.container}>
         <Formik
             initialValues={{
-                id: Math.random() * 100000,
+                id: Math.random() * 1000000,
                 title: '',
                 description: '',
-                priority: 'low',
+                priority: '',
                 time: moment().format('LL')
             }}
             onSubmit={(values, resetForm) => handleSubmit(values, resetForm)}
@@ -43,14 +49,29 @@ function AddScreen({addTask}) {
             resetForm
           }) => (
               <View>
-                  <AppPicker/>
-                  <AppTextInput
-                      name='title'
-                      placeholder='Title'
-                      value={values.title}
-                      onChangeText={handleChange('title')}
-                      style={{marginTop: 10}}
-                  />
+                    <View style={styles.containers}>
+        <DropDownPicker
+            items={priorities}
+            defaultIndex={0}
+            containerStyle={{height: 40}}
+            onChangeItem={item => item}
+            style={[styles.picker]}
+            placeholder='Priority'
+        />
+    </View>
+                {/* <AppPicker
+                  name='priority'
+                  items={priorities}
+                  value={values.priority}
+                  onChangeItem={handleChange}
+                /> */}
+                <AppTextInput
+                    name='title'
+                    placeholder='Title'
+                    value={values.title}
+                    onChangeText={handleChange('title')}
+                    style={{marginTop: 10}}
+                />
                 <AppTextInput
                     name='description'
                     placeholder='Description'
@@ -72,6 +93,14 @@ function AddScreen({addTask}) {
 }
 
 const styles = StyleSheet.create({
+  containers: {
+    zIndex: 10,
+},
+picker: {
+  borderColor: colors.grey,
+  borderWidth: 0.5,
+  zIndex: 20,
+},
   button: {
     backgroundColor: colors.primary,
     color: 'black',

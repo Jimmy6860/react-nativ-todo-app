@@ -3,32 +3,17 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import colors from '../config/colors';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import {deleteTask} from '../store/actions/taskActions';
+import {deleteTask, taskDone} from '../store/actions/taskActions';
 import {connect} from "react-redux";
 
-function Card({title, description, priority, time, id, deleteTask}) {
-
-  const onPressDelete = () => {
-    deleteTask(id)
-  }
-
-    const renderRightActions = () => 
-      <TouchableOpacity style={styles.swipeRight}>
-        <MaterialCommunityIcons
-          name="check"
-          color={colors.white}
-          size={24}
-        />
-      </TouchableOpacity>
-
-    const renderLeftActions = () =>
-      <TouchableOpacity onPress={onPressDelete} style={styles.swipeLeft}>
-        <MaterialCommunityIcons
-          name="delete-empty"
-          color={colors.white}
-          size={24}
-        />
-      </TouchableOpacity>
+function Card({
+  title, 
+  description, 
+  priority, 
+  time, 
+  renderLeftActions, 
+  renderRightActions}) 
+  {
 
   return (
     <Swipeable renderRightActions={renderRightActions} renderLeftActions={renderLeftActions}>
@@ -86,12 +71,6 @@ const styles = StyleSheet.create({
   },
   swipeLeft: {
     backgroundColor: colors.delete,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 60,
-  },
-  swipeRight: {
-    backgroundColor: colors.done,
     justifyContent: 'center',
     alignItems: 'center',
     width: 60,
