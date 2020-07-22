@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Keyboard} from 'react-native';
+import { View, StyleSheet, Keyboard, Text} from 'react-native';
 import Screen from '../components/Screen';
 import {Formik} from 'formik';
 import AppTextInput from '../components/AppTextInput';
@@ -8,8 +8,14 @@ import {connect} from "react-redux";
 import colors from '../config/colors';
 import AppButton from '../components/AppButton';
 import moment from 'moment';
-import AppPicker from '../components/AppPicker';
+import * as Yup from 'yup';
 import DropDownPicker from 'react-native-dropdown-picker';
+import ErrorMessage from '../components/ErrorMessage';
+
+const validationSchema = Yup.object().shape({
+  title: Yup.string().required().min(1).label('Title'),
+  priority: Yup.string().required().label('Priority'),
+});
 
 const priorities = [
   {label: 'High', value: 'high'},
@@ -37,6 +43,7 @@ function AddScreen({addTask}) {
                 time: moment().format('LL')
             }}
             onSubmit={(values, resetForm) => handleSubmit(values, resetForm)}
+            validationSchema={validationSchema} 
         >
         {({
             values,
@@ -46,25 +53,21 @@ function AddScreen({addTask}) {
             handleBlur,
             handleSubmit,
             isSubmitting,
-            resetForm
+            resetForm,
+            setFieldValue
           }) => (
               <View>
-                    <View style={styles.containers}>
-        <DropDownPicker
-            items={priorities}
-            defaultIndex={0}
-            containerStyle={{height: 40}}
-            onChangeItem={item => item}
-            style={[styles.picker]}
-            placeholder='Priority'
-        />
-    </View>
-                {/* <AppPicker
-                  name='priority'
-                  items={priorities}
-                  value={values.priority}
-                  onChangeItem={handleChange}
-                /> */}
+                <View style={styles.containers}>
+                  <DropDownPicker
+                      items={priorities}
+                      defaultIndex={0}
+                      containerStyle={{height: 40}}
+                      onChangeItem={item => setFieldValue('priority', item.value)}
+                      style={[styles.picker]}
+                      placeholder={'Priority'}
+                  />
+                </View>
+                <ErrorMessage error={errors['priority']} visible={touched['priority']}/>
                 <AppTextInput
                     name='title'
                     placeholder='Title'
@@ -72,6 +75,7 @@ function AddScreen({addTask}) {
                     onChangeText={handleChange('title')}
                     style={{marginTop: 10}}
                 />
+                <ErrorMessage error={errors['title']} visible={touched['title']}/>
                 <AppTextInput
                     name='description'
                     placeholder='Description'

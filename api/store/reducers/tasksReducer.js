@@ -25,7 +25,6 @@ const tasksReducer = (state = initialState, action) => {
         }
         case DELETE_TASK: {
             const filtered = state.filter(i => i.id !== action.payload)
-            console.log('delete action', filtered)
             return [
                 ...filtered, 
             ]

@@ -6,6 +6,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Screen from '../components/Screen';
 import Card from '../components/Card';
 import colors from '../config/colors';
+import LottieView from 'lottie-react-native';
+
 
 function TasksScreen({tasks, deleteTask, taskDone}) {
 
