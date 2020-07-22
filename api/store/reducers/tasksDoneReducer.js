@@ -1,4 +1,4 @@
-import {TASK_DONE} from '../actionTypes';
+import {TASK_DONE, FINAL_DELETE, RESTORE_TASK} from '../actionTypes';
 
 const initialState = [];
 
@@ -10,6 +10,15 @@ const tasksDoneReducer = (state = initialState, action) => {
                 ...state,
                 action.payload
             ]
+        }
+        case FINAL_DELETE: {
+            const filtered = state.filter(i => i.id !== action.payload);
+            return [
+                ...filtered, 
+            ]
+        }
+        case RESTORE_TASK: {
+
         }
         default: {
             return state

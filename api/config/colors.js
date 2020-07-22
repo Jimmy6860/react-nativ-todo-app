@@ -10,5 +10,6 @@ export default {
     delete: '#d32f2f',
     high: '#c62828',
     medium: '#ef6c00',
-    low: '#0277bd'
+    low: '#0277bd',
+    restore: '#fdd835',
 }

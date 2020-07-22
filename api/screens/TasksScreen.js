@@ -7,7 +7,6 @@ import Screen from '../components/Screen';
 import Card from '../components/Card';
 import colors from '../config/colors';
 import LottieView from "lottie-react-native";
-import ModalForm from '../components/ModalForm';
 import Separator from '../components/Separator';
 
 

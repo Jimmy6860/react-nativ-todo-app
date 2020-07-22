@@ -1,4 +1,11 @@
-import {ADD_TASK, DELETE_TASK, TASK_DONE, EDIT_TASK} from '../actionTypes';
+import {
+    ADD_TASK, 
+    DELETE_TASK, 
+    TASK_DONE, 
+    EDIT_TASK, 
+    FINAL_DELETE, 
+    RESTORE_TASK
+} from '../actionTypes';
 
 export const addTask  = (task) => dispatch => {
     dispatch({
@@ -26,4 +33,18 @@ export const editTask = (task) => dispatch => {
         type: EDIT_TASK,
         payload: task
     })
-}
+};
+
+export const finalDelete = (task) => dispatch => {
+    dispatch({
+        type: FINAL_DELETE,
+        payload: task
+    })
+};
+
+export const restoreTask = (task) => dispatch => {
+    dispatch({
+        type: RESTORE_TASK,
+        payload: task
+    })
+};

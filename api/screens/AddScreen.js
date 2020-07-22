@@ -18,18 +18,16 @@ const validationSchema = Yup.object().shape({
 });
 
 const priorities = [
-  {label: 'High', value: 'high'},
-  {label: 'Medium', value: 'medium'},
-  {label: 'Low', value: 'low'},
+  {label: 'high', value: 'high'},
+  {label: 'medium', value: 'medium'},
+  {label: 'low', value: 'low'},
 ];
 
 function AddScreen({addTask}) {
 
   const handleSubmit = (task, {resetForm}) => {
     addTask(task)
-    console.log(task)
     resetForm()
-    Keyboard.dismiss
   };
 
   return (
@@ -60,10 +58,10 @@ function AddScreen({addTask}) {
                 <View style={styles.pickerContainer}>
                   <DropDownPicker
                       items={priorities}
-                      defaultIndex={0}
+                      defaultIndex={values.id}
                       containerStyle={{height: 40}}
                       onChangeItem={item => setFieldValue('priority', item.value)}
-                      style={[styles.picker]}
+                      style={styles.picker}
                       placeholder={'Priority'}
                   />
                 </View>

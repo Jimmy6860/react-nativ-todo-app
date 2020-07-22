@@ -7,12 +7,25 @@ import colors from '../config/colors';
 import {editTask} from '../store/actions/taskActions';
 import {connect} from "react-redux";
 import moment from 'moment';
+import DropDownPicker from 'react-native-dropdown-picker';
 import AppButton from './AppButton';
+import * as Yup from 'yup';
+import ErrorMessage from './ErrorMessage';
+
+const validationSchema = Yup.object().shape({
+    title: Yup.string().required().min(1).label('Title'),
+    priority: Yup.string().required().label('Priority'),
+  });
+
+const priorities = [
+    {label: 'high', value: 'high'},
+    {label: 'medium', value: 'medium'},
+    {label: 'low', value: 'low'},
+  ];
 
 function ModalForm({visible = false, closeModal, item, editTask}) {
    
     const handleSubmit = (task) => {
-        console.log(task)
         editTask(task)
         closeModal()
     };
@@ -34,18 +47,35 @@ function ModalForm({visible = false, closeModal, item, editTask}) {
                         time: moment().format('LL')
                     }}
                     onSubmit={(values) => handleSubmit(values)}
+                    validationSchema={validationSchema} 
                 >
                 {({
                     values,
+                    errors,
                     handleChange,
-                    handleSubmit
+                    handleSubmit,
+                    setFieldValue,
+                    touched
                 }) => (
                     <View>
+                        <View style={styles.pickerContainer}>
+                            <DropDownPicker
+                                items={priorities}
+                                defaultIndex={values.id}
+                                containerStyle={{height: 40}}
+                                onChangeItem={item => setFieldValue('priority', item.value)}
+                                style={styles.picker}
+                                placeholder={values.priority}
+                            />
+                        </View>
                         <AppTextInput
                             name='title'
                             value={values.title}
                             onChangeText={handleChange('title')}
+                            placeholder='Title'
+                            style={{marginTop: 10}}
                         />
+                        <ErrorMessage error={errors['title']} visible={touched['title']}/>
                         <AppTextInput
                             name='description'
                             placeholder='Description'
@@ -85,6 +115,14 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.white,
         padding: 10
+      },
+      pickerContainer: {
+        zIndex: 10,
+      },
+      picker: {
+        borderColor: colors.grey,
+        borderWidth: 0.5,
+        zIndex: 20,
       },
 });
 
