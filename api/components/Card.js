@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import colors from '../config/colors';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {deleteTask, taskDone} from '../store/actions/taskActions';
 import {connect} from "react-redux";
+import ModalForm from './ModalForm';
 
 function Card({
   title, 
@@ -12,11 +13,16 @@ function Card({
   priority, 
   time, 
   renderLeftActions, 
-  renderRightActions}) 
+  renderRightActions,
+  item
+}) 
   {
+    const [modalVisible, setModalVisible] = useState(false);
 
   return (
+    <>
     <Swipeable renderRightActions={renderRightActions} renderLeftActions={renderLeftActions}>
+      <TouchableOpacity onPress={() => setModalVisible(true)}>
         <View style={styles.container}>
             <View style={styles.details}>
               <View style={[styles.priority, {backgroundColor: colors[priority]}]}>
@@ -34,7 +40,17 @@ function Card({
             </View>
         </View>
         <View style={styles.seperator}/>
+      </TouchableOpacity>
     </Swipeable>
+    {item ? 
+        <ModalForm
+          visible={modalVisible}
+          closeModal={() => setModalVisible(false)}
+          item={item}
+        /> :
+        null
+    }
+    </>
   );
 }
 

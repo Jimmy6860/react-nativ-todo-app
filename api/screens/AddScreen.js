@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Keyboard, Text} from 'react-native';
+import { View, StyleSheet, Keyboard, TouchableOpacity} from 'react-native';
 import Screen from '../components/Screen';
 import {Formik} from 'formik';
 import AppTextInput from '../components/AppTextInput';
@@ -92,6 +92,7 @@ function AddScreen({addTask}) {
               </View>
           )}
         </Formik>
+        <TouchableOpacity onPress={Keyboard.dismiss} style={styles.hideKeyboard}/>
     </Screen>
   );
 }
@@ -113,6 +114,9 @@ picker: {
   },
   container: {
       padding: 10
+  },
+  hideKeyboard: {
+    flex: 1
   },
   info: {
     flexDirection: 'row'

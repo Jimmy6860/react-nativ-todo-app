@@ -1,12 +1,13 @@
-import React from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import { View, StyleSheet, FlatList, TouchableOpacity, Text, Modal, Button} from 'react-native';
 import {connect} from 'react-redux';
 import {deleteTask, taskDone} from '../store/actions/taskActions';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Screen from '../components/Screen';
 import Card from '../components/Card';
 import colors from '../config/colors';
-import LottieView from 'lottie-react-native';
+import LottieView from "lottie-react-native";
+import ModalForm from '../components/ModalForm';
 
 
 function TasksScreen({tasks, deleteTask, taskDone}) {
@@ -46,24 +47,44 @@ function TasksScreen({tasks, deleteTask, taskDone}) {
                 keyExtractor={tasks => tasks.id}
                 style={styles.flatList}
                 renderItem={({item}) => 
-                    <Card
-                        key={item.id}
-                        title={item.title}
-                        description={item.description} 
-                        time={item.time} 
-                        priority={item.priority}
-                        id={item.id}
-                        renderLeftActions={() => renderLeftActions(item.id)}
-                        renderRightActions={() => renderRightActions(item)}
-                    />
+                  <View>
+                    <TouchableOpacity onPress={() => setModalVisible(true)}>
+                      <Card
+                          key={item.id}
+                          title={item.title}
+                          description={item.description} 
+                          time={item.time} 
+                          priority={item.priority}
+                          id={item.id}
+                          renderLeftActions={() => renderLeftActions(item.id)}
+                          renderRightActions={() => renderRightActions(item)}
+                          item={item}
+                      />
+                    </TouchableOpacity>
+                  </View>
                 }
             />
         </View>
+          {
+            tasks.length > 0 ? null :
+            <View style={styles.animationContainer}>
+              <Text>Add a new task</Text>
+              <LottieView
+                      autoPlay
+                      loop={true}
+                      source={require('../../assets/arow.json')}
+                      />
+            </View>
+          }
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
+  animationContainer: {
+    flex: 1,
+    alignItems: 'center'
+  },
   container: {
     flex: 1
   },
