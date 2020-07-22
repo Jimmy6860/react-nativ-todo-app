@@ -3,11 +3,13 @@ import { View, StyleSheet, FlatList } from 'react-native';
 import Card from '../components/Card';
 import Screen from '../components/Screen';
 import {connect} from 'react-redux';
+import Separator from '../components/Separator';
 
 function DoneScreen({tasks}) {
   return (
     <Screen>
         <View style={styles.container}>
+          <Separator/>
           <FlatList
               data={tasks}
               keyExtractor={tasks => tasks.id}

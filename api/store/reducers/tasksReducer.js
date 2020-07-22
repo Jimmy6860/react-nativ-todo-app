@@ -1,4 +1,4 @@
-import {ADD_TASK, DELETE_TASK} from '../actionTypes';
+import {ADD_TASK, DELETE_TASK, EDIT_TASK} from '../actionTypes';
 
 const initialState = [
         {
@@ -24,9 +24,17 @@ const tasksReducer = (state = initialState, action) => {
             ]
         }
         case DELETE_TASK: {
-            const filtered = state.filter(i => i.id !== action.payload)
+            const filtered = state.filter(i => i.id !== action.payload);
             return [
                 ...filtered, 
+            ]
+        }
+        case EDIT_TASK: {
+            const index = state.findIndex(i => i.id === action.payload.id);
+            const replace = state.splice(index, 1, action.payload);
+            console.log('replace', replace)
+            return [
+                ...state
             ]
         }
         default:

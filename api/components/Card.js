@@ -6,6 +6,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {deleteTask, taskDone} from '../store/actions/taskActions';
 import {connect} from "react-redux";
 import ModalForm from './ModalForm';
+import Separator from './Separator';
 
 function Card({
   title, 
@@ -21,8 +22,8 @@ function Card({
 
   return (
     <>
-    <Swipeable renderRightActions={renderRightActions} renderLeftActions={renderLeftActions}>
-      <TouchableOpacity onPress={() => setModalVisible(true)}>
+    <TouchableOpacity onPress={() => setModalVisible(true)}>
+      <Swipeable renderRightActions={renderRightActions} renderLeftActions={renderLeftActions}>
         <View style={styles.container}>
             <View style={styles.details}>
               <View style={[styles.priority, {backgroundColor: colors[priority]}]}>
@@ -39,9 +40,9 @@ function Card({
                 </Text>
             </View>
         </View>
-        <View style={styles.seperator}/>
-      </TouchableOpacity>
-    </Swipeable>
+        <Separator/>
+      </Swipeable>
+    </TouchableOpacity>
     {item ? 
         <ModalForm
           visible={modalVisible}
@@ -79,11 +80,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginRight: 8,
     width: 70
-  },
-  seperator: {
-    backgroundColor: colors.light,
-    height: 2,
-    width: '100%'
   },
   swipeLeft: {
     backgroundColor: colors.delete,

@@ -8,6 +8,7 @@ import Card from '../components/Card';
 import colors from '../config/colors';
 import LottieView from "lottie-react-native";
 import ModalForm from '../components/ModalForm';
+import Separator from '../components/Separator';
 
 
 function TasksScreen({tasks, deleteTask, taskDone}) {
@@ -42,6 +43,7 @@ function TasksScreen({tasks, deleteTask, taskDone}) {
   return (
     <Screen>
         <View style={styles.container}>
+          <Separator/>
             <FlatList
                 data={tasks}
                 keyExtractor={tasks => tasks.id}

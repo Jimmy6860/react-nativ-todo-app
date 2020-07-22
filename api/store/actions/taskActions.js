@@ -1,4 +1,4 @@
-import {ADD_TASK, DELETE_TASK, TASK_DONE} from '../actionTypes';
+import {ADD_TASK, DELETE_TASK, TASK_DONE, EDIT_TASK} from '../actionTypes';
 
 export const addTask  = (task) => dispatch => {
     dispatch({
@@ -20,3 +20,10 @@ export const taskDone = (task) => dispatch => {
         payload: task
     })
 };
+
+export const editTask = (task) => dispatch => {
+    dispatch({
+        type: EDIT_TASK,
+        payload: task
+    })
+}

@@ -57,7 +57,7 @@ function AddScreen({addTask}) {
             setFieldValue
           }) => (
               <View>
-                <View style={styles.containers}>
+                <View style={styles.pickerContainer}>
                   <DropDownPicker
                       items={priorities}
                       defaultIndex={0}
@@ -98,14 +98,14 @@ function AddScreen({addTask}) {
 }
 
 const styles = StyleSheet.create({
-  containers: {
+  pickerContainer: {
     zIndex: 10,
-},
-picker: {
-  borderColor: colors.grey,
-  borderWidth: 0.5,
-  zIndex: 20,
-},
+  },
+  picker: {
+    borderColor: colors.grey,
+    borderWidth: 0.5,
+    zIndex: 20,
+  },
   button: {
     backgroundColor: colors.primary,
     color: 'black',
