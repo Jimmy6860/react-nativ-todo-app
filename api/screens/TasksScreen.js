@@ -45,7 +45,7 @@ function TasksScreen({tasks, deleteTask, taskDone}) {
           <Separator/>
             <FlatList
                 data={tasks}
-                keyExtractor={tasks => tasks.id}
+                keyExtractor={tasks => tasks.id.toString()}
                 style={styles.flatList}
                 renderItem={({item}) => 
                   <View>
@@ -73,7 +73,8 @@ function TasksScreen({tasks, deleteTask, taskDone}) {
               <LottieView
                       autoPlay
                       loop={true}
-                      source={require('../../assets/arow.json')}
+                      source={require('../../assets/animations/arow.json')}
+                      imageAssetsFolder={'../../assets/animations'} 
                       />
             </View>
           }

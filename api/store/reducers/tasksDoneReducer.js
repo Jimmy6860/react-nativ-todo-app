@@ -3,7 +3,6 @@ import {TASK_DONE, FINAL_DELETE, RESTORE_TASK} from '../actionTypes';
 const initialState = [];
 
 const tasksDoneReducer = (state = initialState, action) => {
-    console.log('task done', state)
     switch(action.type) {
         case TASK_DONE: {
             return [

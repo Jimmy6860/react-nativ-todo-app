@@ -32,10 +32,10 @@ function Card({
               <Text>{time}</Text>
             </View>
             <View style={styles.info}>
-                <Text style={styles.title}>
+                <Text style={styles.title} numberOfLines={1}>
                   {title}
                 </Text>
-                <Text style={styles.description}>
+                <Text style={styles.description} numberOfLines={1}>
                   {description}
                 </Text>
             </View>
